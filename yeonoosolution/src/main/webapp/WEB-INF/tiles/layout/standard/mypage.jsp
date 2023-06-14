@@ -239,5 +239,20 @@
 				}
 			});
 		}	
-	}	
+	}
+	$(function(){
+		$("#memberImage").on('change', function() {
+			let file_kind = $(this).val().lastIndexOf('.');
+			let file_name = $(this).val().substring(file_kind+1, $(this).val().length);
+			let file_type = file_name.toLowerCase();
+	
+			const check_file_type = ['jpg','gif','png','jpeg','bmp', ''];
+			if(check_file_type.indexOf(file_type)==-1){
+			  	alert('이미지 파일만 선택할 수 있습니다.');
+			  	$(this).val('');
+			  	return false;
+			}
+			
+		});
+	});
 </script>
