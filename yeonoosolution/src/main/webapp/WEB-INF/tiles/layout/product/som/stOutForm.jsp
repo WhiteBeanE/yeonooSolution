@@ -38,10 +38,10 @@
 				
 				var rowIndex = (radioBtns.parentNode.parentNode.rowIndex)-1;
 				
-				alert("라디오 로우인덱스 -> "+rowIndex);
+				// alert("라디오 로우인덱스 -> "+rowIndex);
 				
 				var DelOut_code = document.getElementById("idOutCode"+rowIndex).value;
-				alert("출고번호 -> "+ DelOut_code);
+				// alert("출고번호 -> "+ DelOut_code);
 				
 				$.ajax({
 					url : '/product/somStOutDelete/',
