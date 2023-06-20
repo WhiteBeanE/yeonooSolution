@@ -13,11 +13,10 @@
 		FROM st_out s
 		LEFT JOIN company c 
 		ON s.customer_code = c.company_code
-		<where>
+		WHERE s.delete_status = 'N'
 		<if test="customerCode != null and customerCode != ''">
 			AND s.customer_code = #{customerCode}
 		</if>
-		</where>
 		ORDER BY LENGTH(s.out_code),s.out_code ASC
 	</select>
 
