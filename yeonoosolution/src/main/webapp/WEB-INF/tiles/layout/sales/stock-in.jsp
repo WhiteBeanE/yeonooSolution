@@ -346,7 +346,7 @@ hr {
 				console.log(stInDetails);
 				
 				$.ajax({
-					url : "/sales/st-in-add",
+					url : "/sales/stock-ins",
 					type : "POST",
 					dataType : "TEXT",
 					contentType: "application/json",
@@ -412,7 +412,7 @@ hr {
 				console.log(stInDetails);
 				
 				$.ajax({
-					url : "/sales/st-in-modify",
+					url : "/sales/stock-ins/" + stInCode,
 					type : "POST",
 					dataType : "TEXT",
 					contentType: "application/json",
@@ -431,7 +431,7 @@ hr {
 		// 제품 검색 데이터 받기
 		function itemSearch(search){
 			$.ajax({
-				url : "/sales/item-list",
+				url : "/sales/items",
 				type : "GET",
 				dataType : "JSON",
 				data : {search :search.toUpperCase()},
@@ -455,7 +455,7 @@ hr {
 		// 창고 검색 데이터 받기
 		function whSearch(){
 			$.ajax({
-				url : "/sales/wh-list",
+				url : "/sales/whs",
 				type : "GET",
 				dataType : "JSON",
 				success : function(whList){
@@ -481,7 +481,7 @@ hr {
 		// 회사 검색 데이터 받기
 		function companySearch(search){
 			$.ajax({
-				url : "/sales/customer-list",
+				url : "/sales/customers",
 				type : "GET",
 				dataType : "JSON",
 				data : {search :search.toUpperCase()},
@@ -766,7 +766,7 @@ hr {
 			let orderDate = $('#search-order-day').val().replaceAll('-', '/');
 			let customerCode = $('#search-customer-code').val();
 			$.ajax({
-				url: "/sales/stock-in-list",
+				url: "/sales/stock-ins",
 				type : "GET",
 				dataType : "JSON",
 				data : { 
@@ -837,7 +837,7 @@ hr {
 		function orderUpdate(column, data){
 			let inCode = radioOrderCode;
 			$.ajax({
-				url: "/sales/st-in/" + inCode,
+				url: "/sales/stock-ins/" + inCode,
 				type : "PATCH",
 				data : {column : column,
 						data : data},

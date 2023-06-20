@@ -23,13 +23,13 @@ public interface PmService {
 	List<PmCompanyDto> findCompanyBySearch(String search);
 	List<PmItemDto> findItemBySearch(String search);
 	String addOrder(PmOrdersDataDto orderData, HttpSession session);
-	String modifyOrder(PmOrdersDataDto orderData, HttpSession session);
+	String modifyOrder(String orderCode, PmOrdersDataDto orderData, HttpSession session);
 	
 	List<PmStockInDto> findStockInListBySearch(PmSearch search);
 	List<PmStInDetailDto> findStockInDetailByInCode(String inCode);
 	String modifyStockInByInCode(PmStockInDto pmStockInDto, HttpSession session);
 	List<PmWhDto> findWhList();
 	String addStIn(PmStInDataDto stInData, HttpSession session);
-	String modifyStIn(PmStInDataDto stInData, HttpSession session);
+	String modifyStIn(String inCode, PmStInDataDto stInData, HttpSession session);
 
 }
