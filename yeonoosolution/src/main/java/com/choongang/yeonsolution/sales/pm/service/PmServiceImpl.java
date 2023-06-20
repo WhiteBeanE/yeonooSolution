@@ -110,10 +110,11 @@ public class PmServiceImpl implements PmService{
 	}
 
 	@Override
-	public String modifyOrder(PmOrdersDataDto orderData, HttpSession session) {
+	public String modifyOrder(String orderCode, PmOrdersDataDto orderData, HttpSession session) {
 		String companyCode = ((MemberDto) session.getAttribute("member")).getCompanyCode();
 		String loginUserName = ((MemberDto) session.getAttribute("member")).getMemberName();
 		PmOrdersDto order = orderData.getOrder();
+		order.setOrderCode(orderCode);
 		order.setCompanyCode(companyCode);
 		order.setRegUser(loginUserName);
 		order.setUpdateUser(loginUserName);
@@ -237,10 +238,11 @@ public class PmServiceImpl implements PmService{
 	}
 
 	@Override
-	public String modifyStIn(PmStInDataDto stInData, HttpSession session) {
+	public String modifyStIn(String inCode, PmStInDataDto stInData, HttpSession session) {
 		String companyCode = ((MemberDto) session.getAttribute("member")).getCompanyCode();
 		String loginUserName = ((MemberDto) session.getAttribute("member")).getMemberName();
 		PmStockInDto stIn = stInData.getStockIn();
+		stIn.setInCode(inCode);
 		stIn.setInDate(stIn.getInDate().replaceAll("-", "/"));
 		stIn.setCompanyCode(companyCode);
 		stIn.setRegUser(loginUserName);

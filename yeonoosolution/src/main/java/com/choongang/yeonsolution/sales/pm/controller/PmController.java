@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,23 +42,23 @@ public class PmController {
 		return "sales/order.layout";
 	}
 	
-	@GetMapping("/order-list")
+	@GetMapping("/orders")
 	@ResponseBody
 	public List<PmOrdersDto> OrdersListBySearch(PmSearch search){
 		log.info("search Data -> {}", search);
 		List<PmOrdersDto> orderList = pmService.findOrdersBySearch(search);
 		log.info("orderList -> {}", orderList.size());
 		return orderList;
-		
 	}
 	
-	@GetMapping("/order/{orderCode}/details")
+	@PostMapping("/orders")
 	@ResponseBody
-	public List<PmOrdersDetailDto> ordersDetailListByOrderCode(@PathVariable String orderCode){
-		
-		List<PmOrdersDetailDto> ordersDetailList = pmService.findOrdersDetailByOrderCode(orderCode);
-		return ordersDetailList;
+	public String orderAdd(@RequestBody PmOrdersDataDto orderData, HttpSession session) {
+		System.out.println(orderData.getOrder());
+		String resultMsg = pmService.addOrder(orderData, session);
+		return resultMsg;
 	}
+	
 	@PatchMapping ("/order/{orderCode}")
 	@ResponseBody
 	public String ordersModifyByorderCode(PmOrdersDto pmOrdersDto, HttpSession session){
@@ -66,32 +67,35 @@ public class PmController {
 		return msg;
 	}
 	
-	@GetMapping("/customer-list")
-	@ResponseBody
-	public List<PmCompanyDto> companyListBySearch(@RequestParam String search){
-		log.info("search -> {}", search);
-		List<PmCompanyDto> companyList = pmService.findCompanyBySearch(search);
-		return companyList;
-	}
-	@GetMapping("/item-list")
-	@ResponseBody
-	public List<PmItemDto> itemListBySearch(@RequestParam String search){
-		log.info("search -> {}", search);
-		List<PmItemDto> itemList = pmService.findItemBySearch(search);
-		return itemList;
-	}
-	@PostMapping("/order-add")
-	@ResponseBody
-    public String orderAdd(@RequestBody PmOrdersDataDto orderData, HttpSession session) {
-		System.out.println(orderData.getOrder());
-        String resultMsg = pmService.addOrder(orderData, session);
-        return resultMsg;
-    }
-    @PostMapping("/order-modify")
+    @PutMapping("/orders/{orderCode}")
     @ResponseBody
-    public String OrderSave(@RequestBody PmOrdersDataDto orderData, HttpSession session) {
-    	String resultMsg = pmService.modifyOrder(orderData, session);
+    public String OrderSave(@PathVariable String orderCode, @RequestBody PmOrdersDataDto orderData, HttpSession session) {
+    	String resultMsg = pmService.modifyOrder(orderCode, orderData, session);
     	return resultMsg;
+    }
+    
+    @GetMapping("/order/{orderCode}/details")
+    @ResponseBody
+    public List<PmOrdersDetailDto> ordersDetailListByOrderCode(@PathVariable String orderCode){
+    	
+    	List<PmOrdersDetailDto> ordersDetailList = pmService.findOrdersDetailByOrderCode(orderCode);
+    	return ordersDetailList;
+    }
+    
+    @GetMapping("/customers")
+    @ResponseBody
+    public List<PmCompanyDto> companyListBySearch(@RequestParam String search){
+    	log.info("search -> {}", search);
+    	List<PmCompanyDto> companyList = pmService.findCompanyBySearch(search);
+    	return companyList;
+    }
+    
+    @GetMapping("/items")
+    @ResponseBody
+    public List<PmItemDto> itemListBySearch(@RequestParam String search){
+    	log.info("search -> {}", search);
+    	List<PmItemDto> itemList = pmService.findItemBySearch(search);
+    	return itemList;
     }
     
     
@@ -99,7 +103,8 @@ public class PmController {
     String stockInForm() {
     	return "sales/stock-in.layout";
     }
-    @GetMapping("/stock-in-list")
+    
+    @GetMapping("/stock-ins")
     @ResponseBody
     public List<PmStockInDto> stockInListBySearch(PmSearch search){
     	log.info("search Data -> {}", search);
@@ -108,35 +113,40 @@ public class PmController {
     	
     }
     
-    @GetMapping("/stock-in/{inCode}/details")
+    @PostMapping("/stock-ins")
     @ResponseBody
-    public List<PmStInDetailDto> stockInDetailListByOrderCode(@PathVariable String inCode){
-    	List<PmStInDetailDto> stockInDetailList = pmService.findStockInDetailByInCode(inCode);
-    	return stockInDetailList;
+    public String stInAdd(@RequestBody PmStInDataDto stInData, HttpSession session) {
+    	String resultMsg = pmService.addStIn(stInData, session);
+    	return resultMsg;
     }
-    @PatchMapping ("st-in/{inCode}")
+    
+    @PutMapping("/stock-ins/{inCode}")
+    @ResponseBody
+    public String stInSave(@PathVariable String inCode, @RequestBody PmStInDataDto stInData, HttpSession session) {
+    	String resultMsg = pmService.modifyStIn(inCode, stInData, session);
+    	return resultMsg;
+    }
+    
+    @PatchMapping ("/stock-ins/{inCode}")
     @ResponseBody
     public String stockInModifyByorderCode(PmStockInDto pmStockInDto, HttpSession session){
     	String msg = pmService.modifyStockInByInCode(pmStockInDto, session);
     	log.info("msg -> {}", msg);
     	return msg;
     }
-    @GetMapping("/wh-list")
+    
+    @GetMapping("/stock-in/{inCode}/details")
+    @ResponseBody
+    public List<PmStInDetailDto> stockInDetailListByOrderCode(@PathVariable String inCode){
+    	List<PmStInDetailDto> stockInDetailList = pmService.findStockInDetailByInCode(inCode);
+    	return stockInDetailList;
+    }
+    
+    @GetMapping("/whs")
     @ResponseBody
     public List<PmWhDto> whList() {
         List<PmWhDto> whList = pmService.findWhList();
         return whList;
     }
-    @PostMapping("/st-in-add")
-	@ResponseBody
-    public String stInAdd(@RequestBody PmStInDataDto stInData, HttpSession session) {
-        String resultMsg = pmService.addStIn(stInData, session);
-        return resultMsg;
-    }
-    @PostMapping("/st-in-modify")
-    @ResponseBody
-    public String stInSave(@RequestBody PmStInDataDto stInData, HttpSession session) {
-    	String resultMsg = pmService.modifyStIn(stInData, session);
-    	return resultMsg;
-    }
+    
 }

@@ -340,7 +340,7 @@ hr {
 			console.log(orderDetails);
 			
 			$.ajax({
-				url : "/sales/order-add",
+				url : "/sales/orders",
 				type : "POST",
 				dataType : "TEXT",
 				contentType: "application/json",
@@ -410,8 +410,8 @@ hr {
 			console.log(orderDetails);
 			
 			$.ajax({
-				url : "/sales/order-modify",
-				type : "POST",
+				url : "/sales/orders/" + orderCode,
+				type : "PUT",
 				dataType : "TEXT",
 				contentType: "application/json",
 				data: JSON.stringify({
@@ -429,7 +429,7 @@ hr {
 	// 제품 검색 데이터 받기
 	function itemSearch(search){
 		$.ajax({
-			url : "/sales/item-list",
+			url : "/sales/items",
 			type : "GET",
 			dataType : "JSON",
 			data : {search :search.toUpperCase()},
@@ -453,7 +453,7 @@ hr {
 	// 회사 검색 데이터 받기
 	function companySearch(search){
 		$.ajax({
-			url : "/sales/customer-list",
+			url : "/sales/customers",
 			type : "GET",
 			dataType : "JSON",
 			data : {search :search.toUpperCase()},
@@ -691,7 +691,7 @@ hr {
 		let customerCode = $('#search-customer-code').val();
 		let orderEmpid = $('#order-empid').val();
 		$.ajax({
-			url: "/sales/order-list",
+			url: "/sales/orders",
 			type : "GET",
 			dataType : "JSON",
 			data : { startDate : startDate,
