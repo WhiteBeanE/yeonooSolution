@@ -12,12 +12,12 @@ public class SecurityPasswordEncoder implements PasswordEncoder {
 	public SecurityPasswordEncoder() {
 		this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	}
-
+	// 비밀번호 해시화
 	@Override
 	public String encode(CharSequence rawPassword) {
 		return bCryptPasswordEncoder.encode(rawPassword);
 	}
-
+	// 비밀번호가 인치하는지 확인
 	@Override
 	public boolean matches(CharSequence rawPassword, String encodedPassword) {
 		return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
