@@ -28,8 +28,9 @@ public class UserLoginFailureHandler extends SimpleUrlAuthenticationFailureHandl
 		log.info("[onAuthenticationFailure] exception : {}", exception.getMessage());
 		
 		int errorCode = HttpStatus.BAD_REQUEST.value();
-		
+		// errorCode = 400
 		setDefaultFailureUrl("/standard/login?error=" + errorCode);
+		// 인증 실패 로직 처리 
 		super.onAuthenticationFailure(request, response, exception);
 		
 	}

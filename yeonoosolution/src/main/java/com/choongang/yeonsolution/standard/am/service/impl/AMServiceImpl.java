@@ -92,10 +92,12 @@ public class AMServiceImpl implements AMService{
 					MemberDto foundMemberDto = amDao.selectMember(memberDto.getMemberUid());
 			        for (Field field : fields) {
 			        	//필드 접근 허용
+			        	// private이거나 protected로 선언되어 있을 경우에도 접근할 수 있게 해줌
 			            field.setAccessible(true);
 			            
 			            try {
 							if (field.get(memberDto) != null) {
+								// null 값을 왜 확인하는 거지? 값을 입력 한하면 크라이언트에서 서버로 넘어오지도 않게 설정을 했는데?
 								//field.set(해당 필드값을 set 할 인스턴스, set 해줄 값)
 								field.set(foundMemberDto, field.get(memberDto));
 							}
