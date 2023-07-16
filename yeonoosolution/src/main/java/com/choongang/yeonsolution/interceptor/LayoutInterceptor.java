@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.choongang.yeonsolution.standard.am.security.UserDetailsDto;
 
+
 public class LayoutInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

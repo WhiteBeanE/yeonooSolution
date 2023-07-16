@@ -55,8 +55,7 @@ public class SecurityConfig{
 						.antMatchers("/standard/**").authenticated() // 로그인 인증을 필오하나 특정 권한은 확인하지 않음
 						.antMatchers("/product/**").hasAnyRole("PRODUCT", "ADMIN")
 						.antMatchers("/sales/**").hasAnyRole("SALES", "ADMIN")
-						.anyRequest()
-						.authenticated()
+						.anyRequest().authenticated()
 						.and()
 					//exceptionHandling 설정
 					.exceptionHandling()
